@@ -1,0 +1,40 @@
+{
+    "name": "mobbexco/magento-2-subscriptions",
+    "description": "Mobbex Subscriptions Integration Module",
+    "type": "magento2-module",
+    "license": [
+        "OSL-3.0",
+        "AFL-3.0"
+    ],
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://repo.magento.com/"
+        }
+    ],
+    "authors": [
+        {
+            "email": "info@mobbex.com",
+            "name": "Mobbex"
+        }
+    ],
+    "require": {
+        "magento/magento-composer-installer": "*",
+        "mobbexco/php-plugins-sdk": "*",
+        "mobbexco/magento-2": "^3.0"
+    },
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Mobbex\\Subscriptions\\": ""
+        }
+    },
+    "minimum-stability": "dev",
+    "config": {
+        "allow-plugins": {
+            "magento/magento-composer-installer": true
+        }
+    }
+}

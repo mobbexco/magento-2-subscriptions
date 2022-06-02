@@ -1,0 +1,7 @@
+<config>
+    <module name="Mobbex_Subscriptions" setup_version="1.0.0" active="true">
+        <sequence>
+            <module name="Mobbex_Webpay"/>
+        </sequence>
+    </module>
+</config>
