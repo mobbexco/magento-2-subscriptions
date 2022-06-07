@@ -34,16 +34,17 @@ class SubscriberRepository
     }
 
     /**
-     * Get subscriber from cart id.
+     * Get subscriber from the value and field given.
      * 
-     * @param int|string $id
+     * @param mixed $value The value to match.
+     * @param string $field The field name where search. Primary key by default.
      * 
      * @return \Mobbex\Subscriptions\Model\Subscriber 
      */
-    public function get($id)
+    public function get($value, $field = null)
     {
         $subscriber = $this->factory->create();
-        $this->resource->load($subscriber, $id);
+        $this->resource->load($subscriber, $value, $field);
         return $subscriber;
     }
 
@@ -69,7 +70,7 @@ class SubscriberRepository
      */
     public function sync($subscriber)
     {
-        $subscription = $this->subscriptionRepository->getByUid($subscriber->getData('subscription_uid'));
+        $subscription = $this->subscriptionRepository->get($subscriber->getData('subscription_uid'), 'uid');
 
         try {
             return new \Mobbex\Modules\Subscriber(
