@@ -2,6 +2,26 @@
     <system>
         <section id="payment">
             <group id="webpay" translate="label" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Mobbex</label>
+
+                <field id="active" translate="label comment" sortOrder="1" type="select" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Activo</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="api_key" translate="label comment" sortOrder="3" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Clave de API</label>
+                </field>
+                <field id="access_token" translate="label comment" sortOrder="4" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Token de acceso</label>
+                </field>
+                <field id="test_mode" translate="label comment" sortOrder="7" type="select" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Modo de pruebas</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="embed" translate="label comment" sortOrder="7" type="select" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Integración embebida</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
                 <field id="subscriptions_version" translate="label" type="label" sortOrder="21" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Subscriptions Version</label>
                     <backend_model>Mobbex\Subscriptions\Model\Config\Version</backend_model>
