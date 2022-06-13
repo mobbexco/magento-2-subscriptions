@@ -2,11 +2,8 @@
 
 namespace Mobbex\Subscriptions\Model;
 
-class ExecutionRepository
+class ExecutionRepository extends \Mobbex\Subscriptions\Model\Repository
 {
-    /** @var \Psr\Log\LoggerInterface */
-    public $logger;
-
     /** @var \Mobbex\Subscriptions\Model\ExecutionFactory */
     public $factory;
 
@@ -17,15 +14,33 @@ class ExecutionRepository
     public $collectionFactory;
 
     public function __construct(
-        \Psr\Log\LoggerInterface $logger,
         \Mobbex\Subscriptions\Model\ExecutionFactory $factory,
         \Mobbex\Subscriptions\Model\ExecutionResource $resource,
         \Mobbex\Subscriptions\Model\ExecutionCollectionFactory $collectionFactory
     ) {
-        $this->logger            = $logger;
         $this->factory           = $factory;
         $this->resource          = $resource;
         $this->collectionFactory = $collectionFactory;
+    }
+
+    /**
+     * Build an Execution.
+     * 
+     * @param array $props {
+     *     @type string $uid              Primaty key. UID generated in Mobbex.
+     *     @type string $subscription_uid UID of parent subscription.
+     *     @type string $subscriber_uid   UID of parent subscriber.
+     *     @type int    $status           Payment status.
+     *     @type float  $total            Amount charged.
+     *     @type string $date             Date of payment.
+     *     @type string $data             Encoded webhook data.
+     * }
+     * 
+     * @return \Mobbex\Subscriptions\Model\Execution
+     */
+    public function build($props = [])
+    {
+        return parent::build(...func_get_args());
     }
 
     /**
@@ -36,11 +51,9 @@ class ExecutionRepository
      * 
      * @return \Mobbex\Subscriptions\Model\Execution 
      */
-    public function get($value, $field = null)
+    public function get($value = null, $field = null)
     {
-        $execution = $this->factory->create();
-        $this->resource->load($execution, $value, $field);
-        return $execution;
+        return parent::get(...func_get_args());
     }
 
     /**
@@ -52,7 +65,6 @@ class ExecutionRepository
      */
     public function save($execution)
     {
-        $this->resource->save($execution);
-        return $execution;
+        return parent::save(...func_get_args());
     }
 }

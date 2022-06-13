@@ -2,11 +2,8 @@
 
 namespace Mobbex\Subscriptions\Model;
 
-class SubscriptionRepository
+class SubscriptionRepository extends \Mobbex\Subscriptions\Model\Repository
 {
-    /** @var \Psr\Log\LoggerInterface */
-    public $logger;
-
     /** @var \Mobbex\Subscriptions\Model\SubscriptionFactory */
     public $factory;
 
@@ -17,15 +14,35 @@ class SubscriptionRepository
     public $collectionFactory;
 
     public function __construct(
-        \Psr\Log\LoggerInterface $logger,
         \Mobbex\Subscriptions\Model\SubscriptionFactory $factory,
         \Mobbex\Subscriptions\Model\SubscriptionResource $resource,
         \Mobbex\Subscriptions\Model\SubscriptionCollectionFactory $collectionFactory
     ) {
-        $this->logger            = $logger;
         $this->factory           = $factory;
         $this->resource          = $resource;
         $this->collectionFactory = $collectionFactory;
+    }
+
+    /**
+     * Build a Subscription from product id.
+     * 
+     * @param array $props {
+     *     @type int    $product_id  Primary key.
+     *     @type string $type        Execution type, can be "manual" or "dynamic".
+     *     @type string $name        Name displayed to subscribers.
+     *     @type string $description Description displayed to subscribers.
+     *     @type float  $total       Amount to charge.
+     *     @type float  $signup_fee  Different initial amount.
+     *     @type string $interval    Interval between executions.
+     *     @type int    $limit       Maximum number of executions.
+     *     @type int    $free_trial  Number of free periods.
+     * }
+     * 
+     * @return \Mobbex\Subscriptions\Model\Subscription
+     */
+    public function build($props = [])
+    {
+        return parent::build(...func_get_args());
     }
 
     /**
@@ -36,11 +53,9 @@ class SubscriptionRepository
      * 
      * @return \Mobbex\Subscriptions\Model\Subscription 
      */
-    public function get($value, $field = null)
+    public function get($value = null, $field = null)
     {
-        $subscription = $this->factory->create();
-        $this->resource->load($subscription, $value, $field);
-        return $subscription;
+        return parent::get(...func_get_args());
     }
 
     /**
@@ -52,8 +67,7 @@ class SubscriptionRepository
      */
     public function save($subscription)
     {
-        $this->resource->save($subscription);
-        return $subscription;
+        return parent::save(...func_get_args());
     }
 
     /**

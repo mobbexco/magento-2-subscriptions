@@ -2,11 +2,8 @@
 
 namespace Mobbex\Subscriptions\Model;
 
-class SubscriberRepository
+class SubscriberRepository extends \Mobbex\Subscriptions\Model\Repository
 {
-    /** @var \Psr\Log\LoggerInterface */
-    public $logger;
-
     /** @var \Mobbex\Subscriptions\Model\SubscriberFactory */
     public $factory;
 
@@ -20,17 +17,36 @@ class SubscriberRepository
     public $subscriptionRepository;
 
     public function __construct(
-        \Psr\Log\LoggerInterface $logger,
         \Mobbex\Subscriptions\Model\SubscriberFactory $factory,
         \Mobbex\Subscriptions\Model\SubscriberResource $resource,
         \Mobbex\Subscriptions\Model\SubscriberCollectionFactory $collectionFactory,
         \Mobbex\Subscriptions\Model\SubscriptionFactory $subscriptionRepository
     ) {
-        $this->logger                 = $logger;
         $this->factory                = $factory;
         $this->resource               = $resource;
         $this->collectionFactory      = $collectionFactory;
         $this->subscriptionRepository = $subscriptionRepository;
+    }
+
+    /**
+     * Build a Subscriber from cart id.
+     * 
+     * @param array $props {
+     *     @type int    $cart_id          Primaty key.
+     *     @type string $subscription_uid UID of parent subscription.
+     *     @type bool   $test             Test mode active.
+     *     @type string $name             Customer name.
+     *     @type string $email            Customer email.
+     *     @type string $phone            Customer phone.
+     *     @type string $identification   Customer identification (ex. DNI).
+     *     @type int    $customer_id      Platform customer ID.
+     * }
+     * 
+     * @return \Mobbex\Subscriptions\Model\Subscriber
+     */
+    public function build($props = [])
+    {
+        return parent::build(...func_get_args());
     }
 
     /**
@@ -39,13 +55,11 @@ class SubscriberRepository
      * @param mixed $value The value to match.
      * @param string $field The field name where search. Primary key by default.
      * 
-     * @return \Mobbex\Subscriptions\Model\Subscriber 
+     * @return \Mobbex\Subscriptions\Model\Subscriber
      */
-    public function get($value, $field = null)
+    public function get($value = null, $field = null)
     {
-        $subscriber = $this->factory->create();
-        $this->resource->load($subscriber, $value, $field);
-        return $subscriber;
+        return parent::get(...func_get_args());
     }
 
     /**
@@ -57,8 +71,7 @@ class SubscriberRepository
      */
     public function save($subscriber)
     {
-        $this->resource->save($subscriber);
-        return $subscriber;
+        return parent::save(...func_get_args());
     }
 
     /**
