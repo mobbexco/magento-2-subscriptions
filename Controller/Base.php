@@ -16,6 +16,9 @@ class Base extends \Magento\Framework\App\Action\Action
     /** @var \Magento\Framework\Controller\Result\JsonFactory */
     public $resultJsonFactory;
 
+    /** @var \Mobbex\Subscriptions\Model\ExecutionRepository */
+    public $executionRepository;
+
     /** @var \Mobbex\Subscriptions\Model\SubscriberRepository */
     public $subscriberRepository;
 
@@ -30,6 +33,7 @@ class Base extends \Magento\Framework\App\Action\Action
         \Mobbex\Subscriptions\Helper\Config $config,
         \Magento\Checkout\Model\Type\Onepage $checkout,
         \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
+        \Mobbex\Subscriptions\Model\ExecutionRepository $executionRepository,
         \Mobbex\Subscriptions\Model\SubscriberRepository $subscriberRepository,
         \Mobbex\Subscriptions\Model\SubscriptionRepository $subscriptionRepository
     ) {
@@ -37,6 +41,7 @@ class Base extends \Magento\Framework\App\Action\Action
         $this->config                 = $config;
         $this->checkout               = $checkout;
         $this->resultJsonFactory      = $resultJsonFactory;
+        $this->executionRepository    = $executionRepository;
         $this->subscriberRepository   = $subscriberRepository;
         $this->subscriptionRepository = $subscriptionRepository;
 
