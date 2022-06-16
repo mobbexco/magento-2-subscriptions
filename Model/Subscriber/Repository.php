@@ -66,12 +66,20 @@ class SubscriberRepository extends \Mobbex\Subscriptions\Model\Repository
      * Save subscriber to db.
      * 
      * @param \Mobbex\Subscriptions\Model\Subscriber $subscriber
+     * @param \Mobbex\Modules\Subscriber $module Send to fill mobbex response data before save.
      * 
      * @return \Mobbex\Subscriptions\Model\Subscriber
      */
-    public function save($subscriber)
+    public function save($subscriber, $module = null)
     {
-        return parent::save(...func_get_args());
+        if ($module)
+            $this->fill($subscriber, [
+                'uid'         => $module->uid        ?? $subscriber->uid,
+                'source_url'  => $module->sourceUrl  ?? $subscriber->source_url,
+                'control_url' => $module->controlUrl ?? $subscriber->control_url,
+            ]);
+
+        return parent::save($subscriber);
     }
 
     /**
@@ -80,27 +88,32 @@ class SubscriberRepository extends \Mobbex\Subscriptions\Model\Repository
      * @param \Mobbex\Subscriptions\Model\Subscriber $subscriber
      * 
      * @return \Mobbex\Modules\Subscriber Subscriber module.
+     * 
+     * @throws \Mobbex\Exception
      */
     public function sync($subscriber)
     {
+        // Get subscription to calculate subscriber start date
         $subscription = $this->subscriptionRepository->get($subscriber->getData('subscription_uid'), 'uid');
 
-        try {
-            return new \Mobbex\Modules\Subscriber(
-                $subscriber->getData('cart_id'),
-                $subscriber->getData('uid'),
-                $subscriber->getData('subscription_uid'),
-                $subscription->calculateDates()['current'],
-                [
-                    'name'           => $subscriber->getData('name'),
-                    'email'          => $subscriber->getData('email'),
-                    'phone'          => $subscriber->getData('phone'),
-                    'identification' => $subscriber->getData('identification'),
-                    'uid'            => $subscriber->getData('customer_id'),
-                ]
-            );
-        } catch (\Exception $e) {
-            $this->logger->error('[Mobbex] Error Synchronizing Subscriber: ' . $e->getMessage());
-        }
+        // Make API call using module
+        $module = new \Mobbex\Modules\Subscriber(
+            $subscriber->getData('cart_id'),
+            $subscriber->getData('uid'),
+            $subscriber->getData('subscription_uid'),
+            $subscription->calculateDates()['current'],
+            [
+                'name'           => $subscriber->getData('name'),
+                'email'          => $subscriber->getData('email'),
+                'phone'          => $subscriber->getData('phone'),
+                'identification' => $subscriber->getData('identification'),
+                'uid'            => $subscriber->getData('customer_id'),
+            ]
+        );
+
+        if (!$module->uid)
+            throw new \Mobbex\Exception('[Mobbex] Error Synchronizing Subscriber: Empty UID on mobbex response');
+
+        return $module;
     }
 }

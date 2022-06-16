@@ -62,12 +62,18 @@ class SubscriptionRepository extends \Mobbex\Subscriptions\Model\Repository
      * Save subscription to db.
      * 
      * @param \Mobbex\Subscriptions\Model\Subscription $subscription
+     * @param \Mobbex\Modules\Subscription $module Send to fill mobbex response data before save.
      * 
      * @return \Mobbex\Subscriptions\Model\Subscription
      */
-    public function save($subscription)
+    public function save($subscription, $module = null)
     {
-        return parent::save(...func_get_args());
+        if ($module)
+            $this->fill($subscription, [
+                'uid' => $module->uid ?? $subscription->uid,
+            ]);
+
+        return parent::save($subscription);
     }
 
     /**
@@ -76,26 +82,29 @@ class SubscriptionRepository extends \Mobbex\Subscriptions\Model\Repository
      * @param \Mobbex\Subscriptions\Model\Subscription $subscription
      * 
      * @return \Mobbex\Modules\Subscription Subscription module.
+     * 
+     * @throws \Mobbex\Exception
      */
     public function sync($subscription)
     {
-        try {
-            return new \Mobbex\Modules\Subscription(
-                $subscription->getData('product_id'),
-                $subscription->getData('uid'),
-                $subscription->getData('type'),
-                $subscription->getEndpoint('callback'),
-                $subscription->getEndpoint('webhook'),
-                $subscription->getData('total'),
-                $subscription->getData('name'),
-                $subscription->getData('description'),
-                $subscription->getData('interval'),
-                $subscription->getData('limit'),
-                $subscription->getData('free_trial'),
-                $subscription->getData('signup_fee')
-            );
-        } catch (\Exception $e) {
-            $this->logger->error('[Mobbex] Error Synchronizing Subscription: ' . $e->getMessage());
-        }
+        $module = new \Mobbex\Modules\Subscription(
+            $subscription->getData('product_id'),
+            $subscription->getData('uid'),
+            $subscription->getData('type'),
+            $subscription->getEndpoint('callback'),
+            $subscription->getEndpoint('webhook'),
+            $subscription->getData('total'),
+            $subscription->getData('name'),
+            $subscription->getData('description'),
+            $subscription->getData('interval'),
+            $subscription->getData('limit'),
+            $subscription->getData('free_trial'),
+            $subscription->getData('signup_fee')
+        );
+
+        if (!$module->uid)
+            throw new \Mobbex\Exception('[Mobbex] Error Synchronizing Subscription: Empty UID on mobbex response');
+
+        return $module;
     }
 }

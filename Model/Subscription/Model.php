@@ -6,17 +6,17 @@ class Subscription extends \Magento\Framework\Model\AbstractModel
 {
     /**
      * @var array {
-     *     @type int    $product_id       Primary key.
-     *     @type string $uid              UID generated in Mobbex.
-     *     @type string $type             Execution type, can be "manual" or "dynamic".
-     *     @type bool   $state            Current state.
-     *     @type string $name             Name displayed to subscribers.
-     *     @type string $description      Description displayed to subscribers.
-     *     @type float  $total            Amount to charge.
-     *     @type float  $signup_fee       Different initial amount.
-     *     @type string $interval         Interval between executions.
-     *     @type int    $limit            Maximum number of executions.
-     *     @type int    $free_trial       Number of free periods.
+     *     @type int    $product_id  Primary key.
+     *     @type string $uid         UID generated in Mobbex.
+     *     @type string $type        Execution type, can be "manual" or "dynamic".
+     *     @type bool   $state       Current state.
+     *     @type string $name        Name displayed to subscribers.
+     *     @type string $description Description displayed to subscribers.
+     *     @type float  $total       Amount to charge.
+     *     @type float  $signup_fee  Different initial amount.
+     *     @type string $interval    Interval between executions.
+     *     @type int    $limit       Maximum number of executions.
+     *     @type int    $free_trial  Number of free periods.
      * }
      */
     protected $_data;

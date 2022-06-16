@@ -60,10 +60,11 @@ class ExecutionRepository extends \Mobbex\Subscriptions\Model\Repository
      * Save execution to db.
      * 
      * @param \Mobbex\Subscriptions\Model\Execution $execution
+     * @param object $module No use cases here =(.
      * 
      * @return \Mobbex\Subscriptions\Model\Execution
      */
-    public function save($execution)
+    public function save($execution, $module = null)
     {
         return parent::save(...func_get_args());
     }
