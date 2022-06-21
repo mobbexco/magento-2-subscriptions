@@ -59,6 +59,28 @@ class SubscriptionRepository extends \Mobbex\Subscriptions\Model\Repository
     }
 
     /**
+     * Get all subscriptions from the items of quote given.
+     * 
+     * @param \Magento\Quote\Model\Quote $quote
+     * 
+     * @return \Mobbex\Subscriptions\Model\Subscription[]
+     */
+    public function getFromQuote($quote)
+    {
+        $subscriptions = [];
+
+        foreach ($quote->getItemsCollection() as $item) {
+            $subscription = $this->get($item->getProductId());
+
+            // Add only if it was synced with mobbex
+            if ($subscription->uid)
+                $subscriptions[] = $subscription;
+        }
+
+        return $subscriptions;
+    }
+
+    /**
      * Save subscription to db.
      * 
      * @param \Mobbex\Subscriptions\Model\Subscription $subscription

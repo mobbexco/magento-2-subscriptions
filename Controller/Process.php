@@ -26,7 +26,7 @@ class Process extends \Mobbex\Subscriptions\Controller\Base
             'name'              => "$shippingAddress[firstname] $shippingAddress[lastname]",
             'email'             => $quote->getCustomerEmail(),
             'phone'             => $shippingAddress['telephone'],
-            'identification'    => null, // TODO: Get using custom fields
+            'identification'    => $this->getIdentification($quote),
             'customer_id'       => $quote->getCustomerId(),
         ]);
 
@@ -34,7 +34,7 @@ class Process extends \Mobbex\Subscriptions\Controller\Base
         try {
             $this->subscriberRepository->save($subscriber, $this->subscriberRepository->sync($subscriber));
         } catch (\Exception $e) {
-            return $this->createJsonResponse(false, $e->getMessage(), (array) !empty($e->data) ? $e->data : null);
+            return $this->createJsonResponse(false, $e->getMessage(), (array) ($e->data ?? null));
         }
 
         return $this->createJsonResponse(true, 'OK', [
@@ -43,5 +43,28 @@ class Process extends \Mobbex\Subscriptions\Controller\Base
             'url'        => $subscriber->source_url,
             'return_url' => $subscription->getEndpoint('callback'),
         ]);
+    }
+
+    /**
+     * Get the customer identification number from quote.
+     * 
+     * @param \Magento\Quote\Model\Quote $quote
+     * 
+     * @return string|null
+     */
+    public function getIdentification($quote)
+    {
+        try {
+            $customField = $this->_objectManager->create('Mobbex\Webpay\Model\CustomField');
+        } catch (\Exception $e) {
+            return;
+        }
+
+        // Get custom field from quote or customer if logged in
+        return $customField->getCustomField(
+            $quote->getCustomerId() ? 'customer' : 'quote',
+            $quote->getCustomerId() ?: $quote->getId(),
+            'dni'
+        );
     }
 }
