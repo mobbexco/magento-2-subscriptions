@@ -58,6 +58,9 @@ class Config extends \Magento\Framework\App\Helper\AbstractHelper
      */
     public function getAll()
     {
-        return array_map([$this, 'get'], $this->configurationPaths);
+        return array_replace(
+            $this->configurationPaths,
+            array_map([$this, 'get'], $this->configurationPaths)
+        );
     }
 }
