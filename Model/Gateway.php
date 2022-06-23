@@ -66,4 +66,21 @@ class Gateway extends \Magento\Payment\Model\Method\AbstractMethod
     {
         return $this->isActive($quote ? $quote->getStoreId() : null);
     }
+
+    /**
+     * Override internal magento config getter to obtain correctly. 
+     *
+     * @param string $field
+     * @param int|\Magento\Store\Model\Store $storeId
+     *
+     * @return mixed
+     */
+    public function getConfigData($field, $storeId = null)
+    {
+        return $this->_scopeConfig->getValue(
+            'payment/webpay/subscriptions/' . $field,
+            \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
+            $storeId ?: $this->getStore()
+        );
+    }
 }
