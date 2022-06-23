@@ -1,9 +1,8 @@
 # Mobbex Subscriptions for Magento 2
 
 ## Requisitos
-* PHP >= 7.1
-* Magento >= 2.1.0
-* Mobbex for Magento 2 >= 3.0.0
+* PHP >= 7.0
+* Magento >= 2.0.0
 
 ## Instalación
 
