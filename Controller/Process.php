@@ -22,7 +22,7 @@ class Process extends \Mobbex\Subscriptions\Controller\Base
         $subscriber = $this->subscriberRepository->build([
             'cart_id'           => $quote->getId(),
             'subscription_uid ' => $subscription->uid,
-            'test'              => $this->settings['test'],
+            'test'              => \Mobbex\Platform::$settings['test'],
             'name'              => "$shippingAddress[firstname] $shippingAddress[lastname]",
             'email'             => $quote->getCustomerEmail(),
             'phone'             => $shippingAddress['telephone'],
@@ -41,6 +41,7 @@ class Process extends \Mobbex\Subscriptions\Controller\Base
             'id'         => $subscription->uid,
             'sid'        => $subscriber->uid,
             'url'        => $subscriber->source_url,
+            'embed'      => \Mobbex\Platform::$settings['embed'],
             'return_url' => $subscription->getEndpoint('callback'),
         ]);
     }

@@ -25,11 +25,9 @@ class Base extends \Magento\Framework\App\Action\Action
     /** @var \Mobbex\Subscriptions\Model\SubscriptionRepository */
     public $subscriptionRepository;
 
-    /** Current module config values */
-    public $settings;
-
     public function __construct(
         \Psr\Log\LoggerInterface $logger,
+        \Mobbex\Subscriptions\Helper\Sdk $sdk,
         \Mobbex\Subscriptions\Helper\Config $config,
         \Magento\Checkout\Model\Type\Onepage $checkout,
         \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
@@ -45,8 +43,8 @@ class Base extends \Magento\Framework\App\Action\Action
         $this->subscriberRepository   = $subscriberRepository;
         $this->subscriptionRepository = $subscriptionRepository;
 
-        // Set current config values on a prop for easy access
-        $this->settings = $config->getAll();
+        // Init plugins sdk
+        $sdk->init();
     }
 
     /**
