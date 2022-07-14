@@ -1,22 +1,22 @@
 <?php
 
-namespace Mobbex\Subscriptions\Model;
+namespace Mobbex\Subscriptions\Model\Execution;
 
-class ExecutionRepository extends \Mobbex\Subscriptions\Model\Repository
+class Repository extends \Mobbex\Subscriptions\Model\Repository
 {
     /** @var \Mobbex\Subscriptions\Model\ExecutionFactory */
     public $factory;
 
-    /** @var \Mobbex\Subscriptions\Model\ExecutionResource */
+    /** @var \Mobbex\Subscriptions\Model\Execution\Resource */
     public $resource;
 
-    /** @var \Mobbex\Subscriptions\Model\ExecutionCollectionFactory */
+    /** @var \Mobbex\Subscriptions\Model\Execution\CollectionFactory */
     public $collectionFactory;
 
     public function __construct(
         \Mobbex\Subscriptions\Model\ExecutionFactory $factory,
-        \Mobbex\Subscriptions\Model\ExecutionResource $resource,
-        \Mobbex\Subscriptions\Model\ExecutionCollectionFactory $collectionFactory
+        \Mobbex\Subscriptions\Model\Execution\Resource $resource,
+        \Mobbex\Subscriptions\Model\Execution\CollectionFactory $collectionFactory
     ) {
         $this->factory           = $factory;
         $this->resource          = $resource;

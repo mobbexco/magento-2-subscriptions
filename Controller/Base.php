@@ -16,13 +16,13 @@ class Base extends \Magento\Framework\App\Action\Action
     /** @var \Magento\Framework\Controller\Result\JsonFactory */
     public $resultJsonFactory;
 
-    /** @var \Mobbex\Subscriptions\Model\ExecutionRepository */
+    /** @var \Mobbex\Subscriptions\Model\Execution\Repository */
     public $executionRepository;
 
-    /** @var \Mobbex\Subscriptions\Model\SubscriberRepository */
+    /** @var \Mobbex\Subscriptions\Model\Subscriber\Repository */
     public $subscriberRepository;
 
-    /** @var \Mobbex\Subscriptions\Model\SubscriptionRepository */
+    /** @var \Mobbex\Subscriptions\Model\Subscription\Repository */
     public $subscriptionRepository;
 
     public function __construct(
@@ -31,9 +31,9 @@ class Base extends \Magento\Framework\App\Action\Action
         \Mobbex\Subscriptions\Helper\Config $config,
         \Magento\Checkout\Model\Type\Onepage $checkout,
         \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
-        \Mobbex\Subscriptions\Model\ExecutionRepository $executionRepository,
-        \Mobbex\Subscriptions\Model\SubscriberRepository $subscriberRepository,
-        \Mobbex\Subscriptions\Model\SubscriptionRepository $subscriptionRepository
+        \Mobbex\Subscriptions\Model\Execution\Repository $executionRepository,
+        \Mobbex\Subscriptions\Model\Subscriber\Repository $subscriberRepository,
+        \Mobbex\Subscriptions\Model\Subscription\Repository $subscriptionRepository
     ) {
         $this->logger                 = $logger;
         $this->config                 = $config;

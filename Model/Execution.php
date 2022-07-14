@@ -19,6 +19,6 @@ class Execution extends \Magento\Framework\Model\AbstractModel
 
     protected function _construct()
     {
-        $this->_init(\Mobbex\Subscriptions\Model\ExecutionResource::class);
+        $this->_init(\Mobbex\Subscriptions\Model\Execution\Resource::class);
     }
 }

@@ -1,25 +1,25 @@
 <?php
 
-namespace Mobbex\Subscriptions\Model;
+namespace Mobbex\Subscriptions\Model\Subscriber;
 
-class SubscriberRepository extends \Mobbex\Subscriptions\Model\Repository
+class Repository extends \Mobbex\Subscriptions\Model\Repository
 {
     /** @var \Mobbex\Subscriptions\Model\SubscriberFactory */
     public $factory;
 
-    /** @var \Mobbex\Subscriptions\Model\SubscriberResource */
+    /** @var \Mobbex\Subscriptions\Model\Subscriber\Resource */
     public $resource;
 
-    /** @var \Mobbex\Subscriptions\Model\SubscriberCollectionFactory */
+    /** @var \Mobbex\Subscriptions\Model\Subscriber\CollectionFactory */
     public $collectionFactory;
 
-    /** @var \Mobbex\Subscriptions\Model\SubscriptionRepository */
+    /** @var \Mobbex\Subscriptions\Model\Subscription\Repository */
     public $subscriptionRepository;
 
     public function __construct(
         \Mobbex\Subscriptions\Model\SubscriberFactory $factory,
-        \Mobbex\Subscriptions\Model\SubscriberResource $resource,
-        \Mobbex\Subscriptions\Model\SubscriberCollectionFactory $collectionFactory,
+        \Mobbex\Subscriptions\Model\Subscriber\Resource $resource,
+        \Mobbex\Subscriptions\Model\Subscriber\CollectionFactory $collectionFactory,
         \Mobbex\Subscriptions\Model\SubscriptionFactory $subscriptionRepository
     ) {
         $this->factory                = $factory;

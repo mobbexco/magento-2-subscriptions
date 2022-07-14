@@ -1,8 +1,8 @@
 <?php
 
-namespace Mobbex\Subscriptions\Model;
+namespace Mobbex\Subscriptions\Model\Execution;
 
-class ExecutionResource extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
+class Resource extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
 {
     public function _construct()
     {

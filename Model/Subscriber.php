@@ -28,6 +28,6 @@ class Subscriber extends \Magento\Framework\Model\AbstractModel
 
     protected function _construct()
     {
-        $this->_init(\Mobbex\Subscriptions\Model\SubscriberResource::class);
+        $this->_init(\Mobbex\Subscriptions\Model\Subscriber\Resource::class);
     }
 }

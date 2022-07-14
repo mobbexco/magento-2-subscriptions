@@ -1,11 +1,11 @@
 <?php
 
-namespace Mobbex\Subscriptions\Model;
+namespace Mobbex\Subscriptions\Model\Subscriber;
 
-class SubscriberCollection extends \Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection
+class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection
 {
     public function _construct()
     {
-        $this->_init('Mobbex\Subscriptions\Model\Subscriber', 'Mobbex\Subscriptions\Model\SubscriberResource');
+        $this->_init('Mobbex\Subscriptions\Model\Subscriber', 'Mobbex\Subscriptions\Model\Subscriber\Resource');
     }
 }

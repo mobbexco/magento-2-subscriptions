@@ -35,7 +35,7 @@ class Subscription extends \Magento\Framework\Model\AbstractModel
         \Magento\Framework\UrlInterface $url
     ) {
         $this->url = $url;
-        $this->_init(\Mobbex\Subscriptions\Model\SubscriptionResource::class);
+        $this->_init(\Mobbex\Subscriptions\Model\Subscription\Resource::class);
     }
 
     /**
